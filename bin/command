@@ -46,6 +46,7 @@ log.enable.debug = options['--debug'] || log.enable.debug;
 log.enable.verbose = options['--verbose'] || log.enable.verbose;
 
 var config = require('../config/config.js');
+var api = require('../lib/api.js');
 
 /**********************************************************************
  * Main
@@ -76,4 +77,10 @@ log.debug("Command Line Settings:", options);
  */
 if (options['-r']) {
   log.info("Required Param:",requiredparam);
+  api.publicFunction(function(err,res){
+    if (err) {
+      throw new Error("Something went wrong");
+    }
+    log.info("Results:",res);
+  });
 }
