@@ -76,11 +76,11 @@ log.debug("Command Line Settings:", options);
  * Handle a requiredparam
  */
 if (options['-r']) {
-  log.info("Required Param:",requiredparam);
-  api.publicFunction(function(err,res){
+  log.info("Required Param:", requiredparam);
+  api.publicFunction(function(err, res) {
     if (err) {
       throw new Error("Something went wrong");
     }
-    log.info("Results:",res);
+    log.info("Results:", res);
   });
 }
