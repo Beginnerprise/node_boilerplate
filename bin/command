@@ -1,0 +1,79 @@
+#!/usr/bin/env node
+
+/**********************************************************************
+ * Logging Options:
+ *   logging - Enables any logging at all
+ *   debug - Enable extra output to help debug problem
+ *   verbose - OMG, you must be developing.  You probably don't want
+ *   $others - Any can be enabled/disabled but default to enabled
+ *********************************************************************/
+var log = require('iphb-logs');
+
+/**********************************************************************
+ * Help Text
+ *********************************************************************/
+
+// See Docopts Syntax here:
+//   http://bit.ly/1EQXdRe
+
+var help = [
+  "Usage:",
+  "  command [options] -r <requiredparam>",
+  "  command [options]",
+  "",
+  "Options:",
+  "  -c --config        Display the Environment",
+  "  -d --debug         Enable Debug Output",
+  "  -e --error         Enable Error Output",
+  "  -h --help          Show this help",
+  "  -l --log           Enable Log Output",
+  "  -v --verbose       Enable Verbose Output",
+  "",
+  "A generic command documentation you should change",
+  "",
+].join('\n');
+
+/**********************************************************************
+ * Libraries
+ *********************************************************************/
+var docopt = require('docopt').docopt;
+var options = docopt(help);
+
+// Respect the command line or environment vars.  Resort to enabling
+// by whoever enables logging (environment/starphleet or cmd line)
+log.enable.logging = options['--log'] || log.enable.logging;
+log.enable.debug = options['--debug'] || log.enable.debug;
+log.enable.verbose = options['--verbose'] || log.enable.verbose;
+
+var config = require('../config/config.js');
+
+/**********************************************************************
+ * Main
+ *********************************************************************/
+
+/**
+ * Output our environment and quit
+ */
+if (options['--config']) {
+  // Force logging enabled
+  log.enable.logging = true;
+  // Make output look nice
+  log.info("------------------------------------------------------------------");
+  log.info("Configuration:");
+  log.info("------------------------------------------------------------------");
+  for (var key in config) {
+    log.info("  ", key, "=", config[key]);
+  }
+  log.info("------------------------------------------------------------------");
+  process.exit(0);
+}
+
+// Emit our command line options if debug is set
+log.debug("Command Line Settings:", options);
+
+/**
+ * Handle a requiredparam
+ */
+if (options['-r']) {
+  log.info("Required Param:",requiredparam);
+}
