@@ -2,7 +2,7 @@
   "name": "node_boilerplate",
   "version": "1.0.0",
   "description": "An opinionated boiler plate for node modules.",
-  "main": "server.js",
+  "main": "./lib/api.js",
   "directories": {
     "test": "tests"
   },
