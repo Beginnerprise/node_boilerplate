@@ -81,10 +81,16 @@ app.get('/diagnostic', function(req, res) {
  */
 app.get('/publicFunction', function(req, res) {
   api.publicFunction(function(err, res) {
+    // If err - return a 500
     if (err) {
-      return res.status(500).end('Error: ' + err);
+      return res.status(500).json({"error":"criticalError"});
     }
-    res.status(200).end(res);
+    // If Format cannot be determined - return 404
+    if (res === null) {
+      return res.status(404).json({"error":"invalidFormat"});
+    }
+    // If success, return JSON with 200
+    return res.status(200).json(res);
   });
 });
 
