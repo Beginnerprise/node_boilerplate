@@ -27,18 +27,58 @@ var config = require('./config/config.js');
 // Route Handlers
 // ***********************************************************************
 
+// Add paths for the docs to be served via HTML
+app.use('/npmdocs',express.static(__dirname + "/npmdocs"));
+app.use('/restdocs',express.static(__dirname + "/restdocs"));
+
+/**
+ * @apiDefine failed
+ *
+ * @apiError (5xx) {string} criticalError There was a critical server error
+ * @apiErrorExample Error-Response (500):
+ *      HTTP/1.1 500 Error
+ *      {
+ *        "error": "criticalError"
+ *      }
+ */
+
 // Default Route
 app.get('/', function(req, res) {
   res.redirect('https://github.com/Beginnerprise/node_boilerplate');
 });
 
-// All starphleet services should include a healthcheck.  Additonally, the
-// healthcheck should actually detect if the service is healthy and NOT just
-// response with a generic 200 like below
+/**
+ * @api {get} /diagnostic Starphleet Healthcheck
+ * @apiGroup Healthcheck
+ * @apiName diagnostic
+ * @apiDescription A normal starphleet healthcheck
+ * @apiSuccessExample {string} Success-Response (200):
+ *      HTTP/1.1 200 Response
+ *      Ok
+ * @apiUse failed
+ */
 app.get('/diagnostic', function(req, res) {
   res.status(200).end('OK');
 });
 
+
+/**
+ * @api {get} /publicFunction Validate a Phone Number
+ * @apiGroup Example
+ * @apiName publicFunction
+ * @apiParam {string} example         Example Param
+ * @apiDescription Example Description
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 Ok
+ *      {}
+ * @apiError (4xx) invalidFormat Example API error
+ * @apiErrorExample Error-Response (404):
+ *      HTTP/1.1 404 Error
+ *      {
+ *        "error": "invalidFormat"
+ *      }
+ * @apiUse failed
+ */
 app.get('/publicFunction', function(req, res) {
   api.publicFunction(function(err, res) {
     if (err) {

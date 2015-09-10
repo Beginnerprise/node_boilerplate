@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "./tests/runall.sh",
-    "start": "node server.js"
+    "start": "node server.js",
+    "docs": "rm -rf ./restdocs ./npmdocs && ./node_modules/.bin/apidoc -f 'server.js' -o ./restdocs && ./node_modules/.bin/jsdoc lib/* README.md -d ./npmdocs"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "docopt": "^0.6.2",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "jsdoc": "git+https://github.com/Beginnerprise/jsdoc.git",
+    "apidoc": "git+https://github.com/Beginnerprise/apidoc.git",
     "iphb-logs": "0.0.14"
   }
 }
