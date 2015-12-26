@@ -22,6 +22,7 @@ var app = express();
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var config = require('./config/config.js');
+var api = require('./lib/api.js');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
