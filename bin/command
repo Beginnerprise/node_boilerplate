@@ -52,6 +52,9 @@ var api = require('../lib/api.js');
  * Main
  *********************************************************************/
 
+// Emit our command line options if debug is set
+log.debug("Command Line Settings:", options);
+
 /**
  * Output our environment and quit
  */
@@ -68,9 +71,6 @@ if (options['--config']) {
   log.info("------------------------------------------------------------------");
   process.exit(0);
 }
-
-// Emit our command line options if debug is set
-log.debug("Command Line Settings:", options);
 
 /**
  * Handle a requiredparam
