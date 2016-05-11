@@ -1,17 +1,25 @@
+"use strict";
+
+/********************************************************************
+ * Configuration
+ ********************************************************************/
+
+/*eslint no-process-env: "off"*/
 var config = {
-  var1: "some setting",
-  var2: process.env.SOME_SETTING
+  enableLogging: typeof process.env.ENABLE_LOGGING !== "undefined",
+  enableDebug: typeof process.env.ENABLE_DEBUG !== "undefined",
+  enableVerbose: typeof process.env.ENABLE_VERBOSE !== "undefined",
+  serverPort: process.env.PORT || 3000,
+  descriptions: {
+    enableLogging: "Enable Basic Logging",
+    enableDebug: "Enable Debug Logging",
+    enableVerbose: "Enable Verbose Logging",
+    serverPort: "Port For Express Server [Default: 3000]"
+  }
 };
 
-module.exports = config;
+/********************************************************************
+ * Export
+ ********************************************************************/
 
-// Only runs if we are called without an import (as in tests)
-if (module.parent === null) {
-  log.debug("------------------------------------------------------------------");
-  log.debug("Configuration:");
-  log.debug("------------------------------------------------------------------");
-  for (var key in config) {
-    log.debug("  ", key, "=", config[key]);
-  }
-  log.debug("------------------------------------------------------------------");
-}
+module.exports = config;

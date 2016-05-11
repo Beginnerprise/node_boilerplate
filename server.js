@@ -1,42 +1,47 @@
-// ***********************************************************************
-// Logging
-// ***********************************************************************
+"use strict";
 
-var log = require('iphb-logs');
-// Respect starphleet logging parms
-log.enable.logging = process.env.ENABLE_LOGGING ? true : false;
-log.enable.debug = process.env.ENABLE_DEBUG ? true : false;
-log.enable.verbose = process.env.ENABLE_VERBOSE ? true : false;
-log.enable.error = process.env.ENABLE_ERROR ? true : false;
+/********************************************************************
+ * Logging
+ ********************************************************************/
+
+const config = require('./config/config.js');
+const log = require('iphb-logs');
+
+/** Respect Logging Configs */
+log.enable.logging = config.enableLogging;
+log.enable.debug = config.enableDebug;
+log.enable.verbose = config.enableVerbose;
 
 // XXX: A reminder to look at "TODO/XXX" tags and handle them before
 // we are production ready
 log.warn("Someone left dev code in a production release!!!!");
 
-// ***********************************************************************
-// Libraries
-// ***********************************************************************
+/********************************************************************
+ * Libraries
+ ********************************************************************/
 
-var express = require('express');
-var app = express();
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var config = require('./config/config.js');
-var api = require('./lib/api.js');
+/** Hookup Express */
+const express = require('express');
+const app = express();
 
-var bodyParser = require('body-parser');
+/** Configure our body Parser */
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// ***********************************************************************
-// Route Handlers
-// ***********************************************************************
+/********************************************************************
+ * Imports
+ ********************************************************************/
+
+const api = require('./lib/api.js');
+
+/********************************************************************
+ * Route Handlers
+ ********************************************************************/
 
 // Add paths for the docs to be served via HTML
-app.use('/npmdocs',express.static(__dirname + "/npmdocs"));
-app.use('/restdocs',express.static(__dirname + "/restdocs"));
+app.use('/npmdocs', express.static(`${__dirname}/npmdocs`));
+app.use('/restdocs', express.static(`${__dirname}/restdocs`));
 
 /**
  * @apiDefine failed
@@ -49,10 +54,8 @@ app.use('/restdocs',express.static(__dirname + "/restdocs"));
  *      }
  */
 
-// Default Route
-app.get('/', function(req, res) {
-  res.redirect('https://github.com/Beginnerprise/node_boilerplate');
-});
+/** Default Route */
+app.get('/', (req, res) => res.redirect('https://github.com/Beginnerprise/node_boilerplate'));
 
 /**
  * @api {get} /diagnostic Starphleet Healthcheck
@@ -64,11 +67,7 @@ app.get('/', function(req, res) {
  *      Ok
  * @apiUse failed
  */
-app.get('/diagnostic', function(req, res) {
-  res.status(200).end('OK');
-});
-
-
+app.get('/diagnostic', (req, res) => res.status(200).end('OK'));
 /**
  * @api {get} /publicFunction Validate a Phone Number
  * @apiGroup Example
@@ -86,30 +85,18 @@ app.get('/diagnostic', function(req, res) {
  *      }
  * @apiUse failed
  */
-app.get('/publicFunction', function(req, res) {
-  api.publicFunction(function(err, res) {
-    // If err - return a 500
-    if (err) {
-      return res.status(500).json({"error":"criticalError"});
-    }
-    // If Format cannot be determined - return 404
-    if (res === null) {
-      return res.status(404).json({"error":"invalidFormat"});
-    }
-    // If success, return JSON with 200
-    return res.status(200).json(res);
-  });
-});
+app.get('/publicFunction', (req, res) => api.publicFunction()
+  .then(results => res.status(200).json(results))
+  .catch(() => res.status(500).json({ "error": "criticalError" }))
+);
 
 // ***********************************************************************
 // Start the Express Server
 // ***********************************************************************
-// Pull the port from starphleet OR fallback to 3000
-var serverPort = process.env.PORT || 3000;
 // Start your engines...
-var server = app.listen(serverPort, function() {
-  var host = server.address().address;
-  var port = server.address().port;
+const server = app.listen(config.serverPort, () => {
+  const host = server.address().address;
+  const port = server.address().port;
   // Let the user know we're listening
   log.info('Express listening at http://' + host + ":" + port);
 });
