@@ -1,5 +1,13 @@
 #!/usr/bin/env node
+
 "use strict";
+
+/**********************************************************************
+ * Libraries
+ *********************************************************************/
+
+const config = require('../config/config.js');
+const columnify = require('columnify');
 
 /**********************************************************************
  * Logging Options:
@@ -8,7 +16,13 @@
  *   verbose - OMG, you must be developing.  You probably don't want
  *   $others - Any can be enabled/disabled but default to enabled
  *********************************************************************/
+
 const log = require('iphb-logs');
+
+/** Respect log config */
+log.enable.logging = config.enableLogging;
+log.enable.debug = config.enableDebug;
+log.enable.verbose = config.enableVerbose;
 
 /**********************************************************************
  * Help Text
@@ -22,9 +36,13 @@ let _configOverrides = [];
 for (let key in config) {
   if (key !== "descriptions") {
     let _description = config.descriptions[key] || "";
-    _configOverrides.push(`   --${key} <${key}>             ${_description}`);
+    _configOverrides.push({ option: `  --${key} <${key}>`, description: `${_description}` });
   }
 }
+
+_configOverrides = _configOverrides.concat([
+  { option: '  -c --config', description: 'Display the Environment' }
+]);
 
 /**
  * See Docopts Syntax here:
@@ -36,7 +54,7 @@ Usage:
   command [options]
 
 Options:
-${_configOverrides.join('\n')}
+${columnify(_configOverrides, { showHeaders: false, dataTransform: d => `  ${d}` })}
   -c --config                      Display the Environment
   -d --debug                       Enable Debug Output
   -h --help                        Show this help
@@ -49,19 +67,6 @@ A generic command documentation you should change
 /** Process The Docopts */
 const docopt = require('docopt').docopt;
 const options = docopt(help);
-
-
-/**********************************************************************
- * Libraries
- *********************************************************************/
-
-const config = require('../config/config.js');
-
-// Respect the command line or environment vars.  Resort to enabling
-// by whoever enables logging (environment/starphleet or cmd line)
-log.enable.logging = config.enableLogging;
-log.enable.debug = config.enableDebug;
-log.enable.verbose = config.enableVerbose;
 
 /********************************************************************
  * Imports
