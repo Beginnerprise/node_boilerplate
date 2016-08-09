@@ -34,15 +34,8 @@ log.enable.verbose = config.enableVerbose;
  */
 let _configOverrides = [];
 for (let key in config) {
-  if (key !== "descriptions") {
-    let _description = config.descriptions[key] || "";
-    _configOverrides.push({ option: `  --${key} <${key}>`, description: `${_description}` });
-  }
+  _configOverrides.push(`  --${key} <${key}>`);
 }
-
-_configOverrides = _configOverrides.concat([
-  { option: '  -c --config', description: 'Display the Environment' }
-]);
 
 /**
  * See Docopts Syntax here:
@@ -54,12 +47,14 @@ Usage:
   command [options]
 
 Options:
-${columnify(_configOverrides, { showHeaders: false, dataTransform: d => `  ${d}` })}
   -c --config                      Display the Environment
   -d --debug                       Enable Debug Output
   -h --help                        Show this help
   -l --log                         Enable Log Output
   -v --verbose                     Enable Verbose Output
+
+Additional Options:
+${_configOverrides.join('\n')}
 
 A generic command documentation you should change
 `;
@@ -67,6 +62,12 @@ A generic command documentation you should change
 /** Process The Docopts */
 const docopt = require('docopt').docopt;
 const options = docopt(help);
+
+/** Handle dynamic config overrides */
+for (let option in options) {
+  const optionWithoutDashes = option.replace(/^--/, "");
+  config[optionWithoutDashes] = options[option];
+}
 
 /********************************************************************
  * Imports
