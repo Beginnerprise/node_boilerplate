@@ -65,8 +65,10 @@ const options = docopt(help);
 
 /** Handle dynamic config overrides */
 for (let option in options) {
-  const optionWithoutDashes = option.replace(/^--/, "");
-  config[optionWithoutDashes] = options[option];
+  if (options.hasOwnProperty(option) && options[option] && options[option] !== null) {
+    const optionWithoutDashes = option.replace(/^--/, "");
+    config[optionWithoutDashes] = options[option];
+  }
 }
 
 /********************************************************************
