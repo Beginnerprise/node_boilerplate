@@ -8,9 +8,9 @@ const config = require('./config/config.js');
 const log = require('iphb-logs');
 
 /** Respect Logging Configs */
-log.enable.logging = config.enableLogging;
-log.enable.debug = config.enableDebug;
-log.enable.verbose = config.enableVerbose;
+log.enable.logging = config.logging;
+log.enable.debug = config.debug;
+log.enable.verbose = config.verbose;
 
 // XXX: A reminder to look at "TODO/XXX" tags and handle them before
 // we are production ready

@@ -66,8 +66,8 @@ for (let option in options) {
 }
 
 /** Respect log config */
-log.enable.debug = config.enableDebug;
-log.enable.verbose = config.enableVerbose;
+log.enable.debug = config.debug;
+log.enable.verbose = config.verbose;
 
 /********************************************************************
  * Imports
