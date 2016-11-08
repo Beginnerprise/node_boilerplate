@@ -90,10 +90,9 @@ app.get('/publicFunction', (req, res) => api.publicFunction()
   .catch(() => res.status(500).json({ "error": "criticalError" }))
 );
 
-// ***********************************************************************
-// Start the Express Server
-// ***********************************************************************
-// Start your engines...
+/********************************************************************
+ * Start the Express Server
+ ********************************************************************/
 const server = app.listen(config.serverPort, () => {
   const host = server.address().address;
   const port = server.address().port;
