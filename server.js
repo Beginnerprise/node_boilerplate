@@ -93,9 +93,7 @@ app.get('/publicFunction', (req, res) => api.publicFunction()
 /********************************************************************
  * Start the Express Server
  ********************************************************************/
-const server = app.listen(config.serverPort, () => {
-  const host = server.address().address;
-  const port = server.address().port;
-  // Let the user know we're listening
-  log.info('Express listening at http://' + host + ":" + port);
-});
+app.listen(config.serverPort, () =>
+  log.info(`Beta Purger listening on ${config.serverPort}`));
+
+
