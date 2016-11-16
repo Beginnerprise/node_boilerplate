@@ -76,7 +76,7 @@ log.enable.verbose = config.verbose;
 const api = require('../lib/api.js');
 
 /**********************************************************************
- * Main
+ * Setup
  *********************************************************************/
 
 // Emit our command line options if debug is set
@@ -105,6 +105,10 @@ if (options['--config']) {
   `);
   process.exit(0);
 }
+
+/**********************************************************************
+ * Main
+ *********************************************************************/
 
 api.publicFunction()
   .then(r => log.info(`Success: ${r}`))
