@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "./tests/runall.sh",
+    "test": "npm install && ./tests/runall.sh",
     "start": "node server.js",
     "docs": "rm -rf ./restdocs ./npmdocs && ./node_modules/.bin/apidoc -f 'server.js' -o ./restdocs && ./node_modules/.bin/jsdoc lib/* README.md -d ./npmdocs"
   },
