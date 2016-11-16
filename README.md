@@ -124,3 +124,22 @@ You can explore more basic toys by running the command included in this boilerpl
 
 ### Tests
 At the bottom of each file in your "lib" folder there is a section for quick tests.  This code will be executed only when the module is run directly and not included as a module.  You can put any coding scenarios in this section
+
+Example:
+
+```javascript
+/********************************************************************
+ * Tests
+ ********************************************************************/
+
+if (module.parent === null) {
+
+  log.enable.tests = true;
+  log.debug(config);
+  module.exports.addTwoNumbers(1,1)
+    .then(r => r === 2 ? log.success("addTwoNumbers worked") : log.fail("addTwoNumbers failed"))
+    .catch(e => log.fail("Something went wrong with test", e, e.stack || "No Stack Trace"));
+}
+```
+
+To run your tests you can run `npm test`.
