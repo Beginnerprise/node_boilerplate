@@ -31,8 +31,8 @@
     "iphb-logs": "0.0.18",
     "jsdoc": "git+https://github.com/Beginnerprise/jsdoc.git"
   },
-  "engine": {
+  "engines": {
     "node": "6.7.0",
-    "npm": "3.10.3"
+    "npm": "3.10.9"
   }
 }
