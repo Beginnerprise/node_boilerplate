@@ -94,6 +94,4 @@ app.get('/publicFunction', (req, res) => api.publicFunction()
  * Start the Express Server
  ********************************************************************/
 app.listen(config.serverPort, () =>
-  log.info(`Beta Purger listening on ${config.serverPort}`));
-
-
+  log.info(`${config.appName} listening on ${config.serverPort}`));
