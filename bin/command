@@ -109,7 +109,18 @@ if (options['--config']) {
 /**********************************************************************
  * Main
  *********************************************************************/
+const handleError = error => {
+  log(error && (error.stack || error.message || error));
+  process.exit(1);
+};
 
-api.publicFunction()
-  .then(r => log.info(`Success: ${r}`))
-  .catch(e => log.error(`Error: ${e}`));
+
+const main = async () => {
+  try {
+    // Do things
+  } catch (e) {
+    handleError(e);
+  }
+};
+
+main().catch(handleError);
