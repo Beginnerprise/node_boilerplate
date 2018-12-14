@@ -25,6 +25,7 @@
     "apidoc": "git+https://github.com/Beginnerprise/apidoc.git",
     "body-parser": "1.15.2",
     "cookie-parser": "1.4.3",
+    "debug": "4.1.0",
     "docopt": "0.6.2",
     "express": "4.14.0",
     "express-session": "1.14.2",

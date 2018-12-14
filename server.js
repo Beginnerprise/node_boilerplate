@@ -4,28 +4,19 @@
  * Logging
  ********************************************************************/
 
-const config = require('./config/config.js');
-const log = require('iphb-logs');
-
-/** Respect Logging Configs */
-log.enable.logging = config.logging;
-log.enable.debug = config.debug;
-log.enable.verbose = config.verbose;
-
-// XXX: A reminder to look at "TODO/XXX" tags and handle them before
-// we are production ready
-log.warn("Someone left dev code in a production release!!!!");
+const config = require("./config/config.js");
+const log = require("./lib/log.js").init("server.js");
 
 /********************************************************************
  * Libraries
  ********************************************************************/
 
 /** Hookup Express */
-const express = require('express');
+const express = require("express");
 const app = express();
 
 /** Configure our body Parser */
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -33,15 +24,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * Imports
  ********************************************************************/
 
-const api = require('./lib/api.js');
+const api = require("./lib/api.js");
 
 /********************************************************************
  * Route Handlers
  ********************************************************************/
 
 // Add paths for the docs to be served via HTML
-app.use('/npmdocs', express.static(`${__dirname}/npmdocs`));
-app.use('/restdocs', express.static(`${__dirname}/restdocs`));
+app.use("/npmdocs", express.static(`${__dirname}/npmdocs`));
+app.use("/restdocs", express.static(`${__dirname}/restdocs`));
 
 /**
  * @apiDefine failed
@@ -55,7 +46,7 @@ app.use('/restdocs', express.static(`${__dirname}/restdocs`));
  */
 
 /** Default Route */
-app.get('/', (req, res) => res.redirect('https://github.com/Beginnerprise/node_boilerplate'));
+app.get("/", (req, res) => res.redirect("https://github.com/Beginnerprise/node_boilerplate"));
 
 /**
  * @api {get} /diagnostic Starphleet Healthcheck
@@ -67,7 +58,7 @@ app.get('/', (req, res) => res.redirect('https://github.com/Beginnerprise/node_b
  *      Ok
  * @apiUse failed
  */
-app.get('/diagnostic', (req, res) => res.status(200).end('OK'));
+app.get("/diagnostic", (req, res) => res.status(200).end("OK"));
 /**
  * @api {get} /publicFunction Validate a Phone Number
  * @apiGroup Example
@@ -85,13 +76,9 @@ app.get('/diagnostic', (req, res) => res.status(200).end('OK'));
  *      }
  * @apiUse failed
  */
-app.get('/publicFunction', (req, res) => api.publicFunction()
-  .then(results => res.status(200).json(results))
-  .catch(() => res.status(500).json({ "error": "criticalError" }))
-);
+app.get("/publicFunction", (req, res) => api.publicFunction().then(results => res.status(200).json(results)).catch(() => res.status(500).json({ error: "criticalError" })));
 
 /********************************************************************
  * Start the Express Server
  ********************************************************************/
-app.listen(config.serverPort, () =>
-  log.info(`${config.appName} listening on ${config.serverPort}`));
+app.listen(config.serverPort, () => log.info(`${config.appName} listening on ${config.serverPort}`));
