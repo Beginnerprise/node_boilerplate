@@ -4,8 +4,8 @@
  * Logging
  ********************************************************************/
 
-const config = require("./config/config.js");
-const log = require("./lib/log.js").init("server.js");
+const config = require("../config/config.js");
+const log = require("../lib/log.js").init("server.js");
 
 /********************************************************************
  * Libraries
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * Imports
  ********************************************************************/
 
-const api = require("./lib/api.js");
+const api = require("../lib/api.js");
 
 /********************************************************************
  * Route Handlers

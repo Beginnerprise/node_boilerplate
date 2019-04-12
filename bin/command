@@ -9,14 +9,13 @@
 const config = require('../config/config.js');
 
 /**********************************************************************
- * Logging Options:
- *   logging - Enables any logging at all
- *   debug - Enable extra output to help debug problem
- *   verbose - OMG, you must be developing.  You probably don't want
- *   $others - Any can be enabled/disabled but default to enabled
+ * Logging
  *********************************************************************/
-
-const log = require('iphb-logs');
+const _enabledLogs = [
+  "command:info"
+].join(' ');
+process.env.DEBUG = process.env.DEBUG || _enabledLogs;
+const log = require("../lib/log.js").init("command");
 
 /**********************************************************************
  * Help Text
