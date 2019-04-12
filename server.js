@@ -81,4 +81,5 @@ app.get("/publicFunction", (req, res) => api.publicFunction().then(results => re
 /********************************************************************
  * Start the Express Server
  ********************************************************************/
-app.listen(config.serverPort, () => log.info(`${config.appName} listening on ${config.serverPort}`));
+app.listen(config.serverPort, () =>
+  log.info(`${config.appName} listening on ${config.serverPort}`));

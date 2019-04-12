@@ -31,8 +31,7 @@
     "express-session": "1.14.2",
     "iphb-logs": "0.0.18",
     "jsdoc": "git+https://github.com/Beginnerprise/jsdoc.git",
-    "request": "^2.83.0",
-    "shell-quote": "^1.6.1"
+    "shell-quote": "1.6.1"
   },
   "engines": {
     "node": "8.9.4",
