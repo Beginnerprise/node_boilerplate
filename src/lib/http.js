@@ -3,7 +3,7 @@
 "use strict";
 
 const urlParse = require('url');
-const log = require('iphb-logs');
+const log = require('./log.js').init('http.js');
 const config = require('../config/config.js');
 
 const _request = (method, url, data) => new Promise((resolve, reject) => {

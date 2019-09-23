@@ -3,7 +3,7 @@
 "use strict";
 
 const spawn = require('child_process').spawn;
-const log = require('iphb-logs');
+const log = require('./log.js').init('shell-promise.js');
 const parse = require('shell-quote').parse;
 
 module.exports = {
