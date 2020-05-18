@@ -26,6 +26,7 @@ module.exports = {
 
     const _formatResults = code => ({
       code,
+      command,
       stderr: stderr.join(''),
       stdout: stdout.join('')
     });
